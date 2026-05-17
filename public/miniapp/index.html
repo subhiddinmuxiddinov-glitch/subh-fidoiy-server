@@ -271,9 +271,9 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#1a4a25 0
       <div class="card">
         <div class="card-hdr">
           <div class="card-hdr-ico"><svg viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-          <h2>📋 Oldingi 2 ta sotuvim</h2>
+          <h2>📋 Sotuvlar tarixim <span id="histArrow">▼</span></h2>
         </div>
-        <div id="prevList"></div>
+        <div id="prevList" style="display:none"></div>
       </div>
     </div>
 
@@ -386,7 +386,7 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#1a4a25 0
     </div>
     <div class="w-row">
       <button class="w-adj" onclick="adjW(-0.1)">−</button>
-      <input class="w-inp" type="number" id="wInp" value="10" min="10" oninput="updPrev()">
+      <input class="w-inp" type="number" id="wInp" value="10" step="1" min="10" oninput="updPrev()">
       <button class="w-adj" onclick="adjW(0.1)">+</button>
     </div>
     <div class="w-unit">kilogramm (masalan: 1.5, 10.3, 25.7)</div>
@@ -410,11 +410,11 @@ const DEF_PRODUCTS = [
   {id:'rangli',     name:'Rangli Salafan', price:3000, icon:'🎨', color:'cp',  active:true},
   {id:'qogoz',      name:"Oq Qog'oz",      price:2000, icon:'📄', color:'cbr', active:true},
 ];
-const getProds = ()=>{
+const getProds = async ()=>{
   try{
-    const r = fetch(SERVER_URL+'/api/products');
     
-    return DEF_PRODUCTS;
+    
+    return data.length ? data : DEF_PRODUCTS;
   }catch(e){
     const d=localStorage.getItem('sf_products');
     return d?JSON.parse(d):DEF_PRODUCTS;
@@ -451,7 +451,7 @@ function maskPhone(inp){
 maskPhone(document.getElementById('regPhone'));
 
 // ===== REGISTER =====
-function doRegister(){
+async function doRegister(){
   const name=document.getElementById('regName').value.trim();
   const phone=document.getElementById('regPhone').value.trim();
   if(!name){tg.showAlert('Ismingizni kiriting!');return}
@@ -513,7 +513,7 @@ function renderPrev(){
   const lst=document.getElementById('prevList');
   if(!myOrds.length){sec.style.display='none';return}
   sec.style.display='block';
-  lst.innerHTML=myOrds.slice(0,2).map(o=>`
+  lst.innerHTML=myOrds.map(o=>`
     <div class="prev-ord">
       <div class="prev-ord-hdr">
         <span class="prev-ord-date">📅 ${o.date||'—'}</span>
@@ -526,7 +526,7 @@ function renderPrev(){
 }
 
 // ===== MATERIALS =====
-function renderMats(){
+async function renderMats(){
   const list=document.getElementById('matList');
   list.innerHTML='';
   const prods = getProds();
@@ -564,7 +564,7 @@ function openModal(p){
 function closeModal(){document.getElementById('wModal').classList.remove('open')}
 function adjW(d){
   const inp=document.getElementById('wInp');
-  inp.value=Math.max(10,Math.round(((parseFloat(inp.value)||1)+d)*10)/10);
+  inp.value=Math.max(0.1,Math.round(((parseFloat(inp.value)||1)+d)*10)/10);
   updPrev();
 }
 function setW(v){document.getElementById('wInp').value=v;updPrev()}
@@ -698,7 +698,6 @@ function launchConfetti(){
     f++;if(f<160)requestAnimationFrame(draw);else ctx.clearRect(0,0,cv.width,cv.height);
   })();
 }
-
 
 function toggleHistory(){
   var list=document.getElementById('prevList');
