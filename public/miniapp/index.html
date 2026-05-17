@@ -708,14 +708,7 @@ function toggleHistory(){
     if(arrow)arrow.textContent='▼';
   }
 }
-function toggleHistory(){
-  var list=document.getElementById('prevList');
-  var arrow=document.getElementById('histArrow');
-  if(!list)return;
-  if(list.style.display==='none'||list.style.display===''){
-    list.style.display='block';
-    if(arrow)arrow.textContent='▲';
-  }else{
+else{
     list.style.display='none';
     if(arrow)arrow.textContent='▼';
   }
