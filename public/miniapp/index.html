@@ -271,9 +271,9 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#1a4a25 0
       <div class="card">
         <div class="card-hdr">
           <div class="card-hdr-ico"><svg viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-          <h2>📋 Sotuvlar tarixim ▼m ▼</h2>
+          <h2>📋 Sotuvlar tarixim</h2>
         </div>
-        <div id="prevList"></div>
+        <div id="prevList" style="display:none"></div>
       </div>
     </div>
 
@@ -697,6 +697,12 @@ function launchConfetti(){
   })();
 }
 
+function toggleHistory(){
+  const list=document.getElementById('prevList');
+  const arrow=document.getElementById('histArrow');
+  if(list.style.display==='none'){list.style.display='block';arrow.textContent='▲';}
+  else{list.style.display='none';arrow.textContent='▼';}
+}
 initApp();
 </script>
 </body>
