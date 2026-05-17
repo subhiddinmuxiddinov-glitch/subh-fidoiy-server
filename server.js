@@ -189,5 +189,32 @@ if (bot) {
   });
 }
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`✅ Server ishga tushdi: http://localhost:${PORT}`));
+
+// Kunlik eslatma - har kuni soat 9:00
+function scheduleDailyMessage(){
+  var now=new Date();
+  var next=new Date();
+  next.setHours(9,0,0,0);
+  if(now>next)next.setDate(next.getDate()+1);
+  setTimeout(function(){
+    sendDailyReminder();
+    setInterval(sendDailyReminder,24*60*60*1000);
+  },next-now);
+  console.log('✅ Kunlik eslatma sozlandi');
+}
+
+function sendDailyReminder(){
+  User.find().then(function(users){
+    users.forEach(function(user){
+      if(!user.userId||user.userId.startsWith('U'))return;
+      bot.sendMessage(user.userId,
+        '🌿 Subh Fidoiy\n\n♻️ Bugun chiqindingiz bormi?\n💰 Sotib yuboring!',
+        {reply_markup:{inline_keyboard:[[{text:'📦 Hozir sotish →',url:'https://subh-fidoiy-server-production-9ec8.up.railway.app/miniapp'}]]}}
+      ).catch(function(){});
+    });
+  }).catch(function(){});
+}
+
+scheduleDailyMessage();
