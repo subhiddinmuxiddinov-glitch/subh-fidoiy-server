@@ -350,7 +350,7 @@ bot.onText(/\/start/, async (msg) => {
 // Health check
 app.get('/', (req, res) => res.json({ status: 'ok', app: 'Subh Fidoiy Server' }));
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`✅ Server ishga tushdi: http://localhost:${PORT}`));
 
 // Static files
