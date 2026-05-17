@@ -352,3 +352,8 @@ app.get('/', (req, res) => res.json({ status: 'ok', app: 'Subh Fidoiy Server' })
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`✅ Server ishga tushdi: http://localhost:${PORT}`));
+
+// Static files
+const path = require('path');
+app.use('/miniapp', express.static(path.join(process.cwd(), 'public/miniapp')));
+app.use('/admin', express.static(path.join(process.cwd(), 'public/admin')));
