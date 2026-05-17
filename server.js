@@ -218,3 +218,13 @@ function sendDailyReminder(){
 }
 
 scheduleDailyMessage();
+
+// Miniapp boti
+const miniBot = new TelegramBot('8628150439:AAG8pIBXhfUJAeeHiB4zaLmudNMztKzgObo', {polling: true});
+miniBot.on('polling_error', function(e){console.log('miniBot xato:', e.code)});
+miniBot.onText(/\/start/, function(msg){
+  miniBot.sendMessage(msg.chat.id,
+    '🌿 Subh Fidoiy ga xush kelibsiz!\n\n♻️ Chiqindingizni pulga aylantiring\n\n👇 Bosing va boshlang:',
+    {reply_markup:{inline_keyboard:[[{text:'📦 Sotish →',url:'https://subh-fidoiy-server-production-9ec8.up.railway.app/miniapp'}]]}}
+  );
+});
