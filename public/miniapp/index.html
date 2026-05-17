@@ -271,7 +271,7 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#1a4a25 0
       <div class="card">
         <div class="card-hdr">
           <div class="card-hdr-ico"><svg viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-          <h2>📋 Oldingi 2 ta sotuvim</h2>
+          <h2>📋 Sotuvlar tarixim ▼m ▼</h2>
         </div>
         <div id="prevList"></div>
       </div>
@@ -380,15 +380,12 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#1a4a25 0
     </div>
     <div style="font-size:12px;color:#999;font-weight:700;margin-bottom:8px">⚡ Tez tanlash:</div>
     <div class="w-quick-row">
-      <button class="w-quick" onclick="setW(1)">1 kg</button>
-      <button class="w-quick" onclick="setW(2)">2 kg</button>
-      <button class="w-quick" onclick="setW(5)">5 kg</button>
       <button class="w-quick" onclick="setW(10)">10 kg</button>
       <button class="w-quick" onclick="setW(20)">20 kg</button>
       <button class="w-quick" onclick="setW(50)">50 kg</button>
     </div>
     <div class="w-row">
-      <input class="w-inp" type="number" id="wInp" value="1" step="0.1" min="0.1" oninput="updPrev()">
+      <input class="w-inp" style="width:calc(100% - 32px);margin:0 16px;display:block" type="number" id="wInp" value="10" step="0.1" min="0.1" oninput="updPrev()">
       </div>
     <div class="w-unit">kilogramm (masalan: 1.5, 10.3, 25.7)</div>
     <div class="price-prev">
