@@ -474,7 +474,7 @@ function doRegister(){
   localStorage.setItem('sf_cur_user',JSON.stringify(user));
   // Serverga ham yuborish
   try{
-    await fetch(SERVER_URL+'/api/users/register',{
+    fetch(SERVER_URL+'/api/users/register',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({userId:user.id,name:user.name,phone:user.phone})
@@ -659,7 +659,7 @@ function submitOrder(){
   const order={orderId:'SF-'+Date.now(),userId:curUser.id,name:curUser.name,phone:curUser.phone,location:userLoc,items:[...cart],total,totalWeight:totalW,date:new Date().toLocaleString('uz-UZ')};
   // Serverga yuborish (Telegram botga xabar ketadi)
   try{
-    await fetch(SERVER_URL+'/api/orders',{
+    fetch(SERVER_URL+'/api/orders',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify(order)
