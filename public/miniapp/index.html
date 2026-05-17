@@ -454,7 +454,7 @@ function maskPhone(inp){
 maskPhone(document.getElementById('regPhone'));
 
 // ===== REGISTER =====
-async function doRegister(){
+async async function doRegister(){
   const name=document.getElementById('regName').value.trim();
   const phone=document.getElementById('regPhone').value.trim();
   if(!name){tg.showAlert('Ismingizni kiriting!');return}
