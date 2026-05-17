@@ -385,7 +385,7 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#1a4a25 0
       <button class="w-quick" onclick="setW(50)">50 kg</button>
     </div>
     <div class="w-row">
-      <input class="w-inp" style="width:calc(100% - 32px);margin:0 16px;display:block" type="number" id="wInp" value="10" step="1" min="10" oninput="updPrev()">
+      <input class="w-inp" type="number" id="wInp" value="10" step="1" min="10" oninput="updPrev()">
       </div>
     <div class="w-unit">kilogramm (masalan: 1.5, 10.3, 25.7)</div>
     <div class="price-prev">
@@ -554,7 +554,7 @@ function openModal(p){
   document.getElementById('mIcon').textContent=p.icon;
   document.getElementById('mName').textContent=p.name;
   document.getElementById('mPrice').textContent=p.price.toLocaleString()+' so\'m/kg';
-  document.getElementById('wInp').value=ex?ex.weight:1;
+  document.getElementById('wInp').value=ex?ex.weight:10;
   updPrev();
   document.getElementById('wModal').classList.add('open');
   if(tg.HapticFeedback)tg.HapticFeedback.impactOccurred('light');
