@@ -702,11 +702,20 @@ function toggleHistory(){
   if(list.style.display==='none'||list.style.display===''){
     list.style.display='block';
     if(arrow)arrow.textContent='▲';
+    renderPrev();
   }else{
     list.style.display='none';
     if(arrow)arrow.textContent='▼';
   }
-}else{
+}
+function toggleHistory(){
+  var list=document.getElementById('prevList');
+  var arrow=document.getElementById('histArrow');
+  if(!list)return;
+  if(list.style.display==='none'||list.style.display===''){
+    list.style.display='block';
+    if(arrow)arrow.textContent='▲';
+  }else{
     list.style.display='none';
     if(arrow)arrow.textContent='▼';
   }
