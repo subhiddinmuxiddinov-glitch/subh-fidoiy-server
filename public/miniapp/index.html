@@ -702,8 +702,11 @@ function toggleHistory(){
   if(list.style.display==='none'||list.style.display===''){
     list.style.display='block';
     if(arrow)arrow.textContent='▲';
-    renderPrev();
   }else{
+    list.style.display='none';
+    if(arrow)arrow.textContent='▼';
+  }
+}else{
     list.style.display='none';
     if(arrow)arrow.textContent='▼';
   }
