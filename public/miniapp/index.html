@@ -416,8 +416,8 @@ const DEF_PRODUCTS = [
 const getProds = ()=>{
   try{
     const r = fetch(SERVER_URL+'/api/products');
-    const data = await r.json();
-    return data.length ? data : DEF_PRODUCTS;
+    
+    return DEF_PRODUCTS;
   }catch(e){
     const d=localStorage.getItem('sf_products');
     return d?JSON.parse(d):DEF_PRODUCTS;
