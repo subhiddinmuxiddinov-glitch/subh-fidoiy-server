@@ -454,7 +454,7 @@ function maskPhone(inp){
 maskPhone(document.getElementById('regPhone'));
 
 // ===== REGISTER =====
-async async function doRegister(){
+async function doRegister(){
   const name=document.getElementById('regName').value.trim();
   const phone=document.getElementById('regPhone').value.trim();
   if(!name){tg.showAlert('Ismingizni kiriting!');return}
@@ -473,13 +473,11 @@ async async function doRegister(){
   curUser=user;
   localStorage.setItem('sf_cur_user',JSON.stringify(user));
   // Serverga ham yuborish
-  try{
-    await fetch(SERVER_URL+'/api/users/register',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({userId:user.id,name:user.name,phone:user.phone})
-    });
-  }catch(e){}
+  fetch(SERVER_URL+'/api/users/register',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({userId:user.id,name:user.name,phone:user.phone})
+  }).catch(e=>{});
   startMain();
 }
 
