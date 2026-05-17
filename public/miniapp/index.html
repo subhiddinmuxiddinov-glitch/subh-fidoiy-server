@@ -473,11 +473,13 @@ async function doRegister(){
   curUser=user;
   localStorage.setItem('sf_cur_user',JSON.stringify(user));
   // Serverga ham yuborish
-  fetch(SERVER_URL+'/api/users/register',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({userId:user.id,name:user.name,phone:user.phone})
-  }).catch(e=>{});
+  try{
+    await fetch(SERVER_URL+'/api/users/register',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({userId:user.id,name:user.name,phone:user.phone})
+    });
+  }catch(e){}
   startMain();
 }
 
