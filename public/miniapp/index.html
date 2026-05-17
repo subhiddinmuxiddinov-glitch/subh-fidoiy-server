@@ -516,7 +516,7 @@ function renderPrev(){
   const lst=document.getElementById('prevList');
   if(!myOrds.length){sec.style.display='none';return}
   sec.style.display='block';
-  lst.innerHTML=myOrds.slice(0,2).map(o=>`
+  lst.innerHTML=myOrds.map(o=>`
     <div class="prev-ord">
       <div class="prev-ord-hdr">
         <span class="prev-ord-date">📅 ${o.date||'—'}</span>
@@ -559,7 +559,7 @@ function openModal(p){
   document.getElementById('mIcon').textContent=p.icon;
   document.getElementById('mName').textContent=p.name;
   document.getElementById('mPrice').textContent=p.price.toLocaleString()+' so\'m/kg';
-  document.getElementById('wInp').value=ex?ex.weight:1;
+  document.getElementById('wInp').value=ex?ex.weight:10;
   updPrev();
   document.getElementById('wModal').classList.add('open');
   if(tg.HapticFeedback)tg.HapticFeedback.impactOccurred('light');
@@ -567,7 +567,7 @@ function openModal(p){
 function closeModal(){document.getElementById('wModal').classList.remove('open')}
 function adjW(d){
   const inp=document.getElementById('wInp');
-  inp.value=Math.max(0.1,Math.round(((parseFloat(inp.value)||1)+d)*10)/10);
+  inp.value=Math.max(10,Math.round(((parseFloat(inp.value)||10)+d)*10)/10);
   updPrev();
 }
 function setW(v){document.getElementById('wInp').value=v;updPrev()}
@@ -702,6 +702,18 @@ function launchConfetti(){
   })();
 }
 
+function toggleHistory(){
+  const list=document.getElementById('prevList');
+  const arrow=document.getElementById('histArrow');
+  if(list.style.display==='none'){
+    list.style.display='block';
+    arrow.textContent='▲';
+    renderPrev();
+  }else{
+    list.style.display='none';
+    arrow.textContent='▼';
+  }
+}
 initApp();
 </script>
 </body>
