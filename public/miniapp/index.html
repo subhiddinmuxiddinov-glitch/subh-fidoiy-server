@@ -415,8 +415,8 @@ const DEF_PRODUCTS = [
 ];
 const getProds = async ()=>{
   try{
-    
-    
+    const r = await fetch(SERVER_URL+'/api/products');
+    const data = await r.json();
     return data.length ? data : DEF_PRODUCTS;
   }catch(e){
     const d=localStorage.getItem('sf_products');
@@ -474,7 +474,7 @@ async function doRegister(){
   localStorage.setItem('sf_cur_user',JSON.stringify(user));
   // Serverga ham yuborish
   try{
-    fetch(SERVER_URL+'/api/users/register',{
+    await fetch(SERVER_URL+'/api/users/register',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({userId:user.id,name:user.name,phone:user.phone})
@@ -532,7 +532,7 @@ function renderPrev(){
 async function renderMats(){
   const list=document.getElementById('matList');
   list.innerHTML='';
-  const prods = getProds();
+  const prods = await getProds();
   prods.filter(p=>p.active!==false).forEach((p,i)=>{
     const ic=cart.find(c=>c.id===p.id);
     const btn=document.createElement('button');
@@ -659,7 +659,7 @@ function submitOrder(){
   const order={orderId:'SF-'+Date.now(),userId:curUser.id,name:curUser.name,phone:curUser.phone,location:userLoc,items:[...cart],total,totalWeight:totalW,date:new Date().toLocaleString('uz-UZ')};
   // Serverga yuborish (Telegram botga xabar ketadi)
   try{
-    fetch(SERVER_URL+'/api/orders',{
+    await fetch(SERVER_URL+'/api/orders',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify(order)
