@@ -267,7 +267,7 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#1a4a25 0
       <div id="matList"></div>
     </div>
 
-    <div id="prevSection" style="display:none">
+    <div id="prevSection">
       <div class="card">
         <div class="card-hdr">
           <div class="card-hdr-ico"><svg viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
@@ -380,16 +380,13 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#1a4a25 0
     </div>
     <div style="font-size:12px;color:#999;font-weight:700;margin-bottom:8px">⚡ Tez tanlash:</div>
     <div class="w-quick-row">
-      <button class="w-quick" onclick="setW(1)">1 kg</button>
-      <button class="w-quick" onclick="setW(2)">2 kg</button>
-      <button class="w-quick" onclick="setW(5)">5 kg</button>
       <button class="w-quick" onclick="setW(10)">10 kg</button>
       <button class="w-quick" onclick="setW(20)">20 kg</button>
       <button class="w-quick" onclick="setW(50)">50 kg</button>
     </div>
     <div class="w-row">
       <button class="w-adj" onclick="adjW(-0.1)">−</button>
-      <input class="w-inp" type="number" id="wInp" value="1" step="0.1" min="0.1" oninput="updPrev()">
+      <input class="w-inp" type="number" id="wInp" value="10" min="10" oninput="updPrev()">
       <button class="w-adj" onclick="adjW(0.1)">+</button>
     </div>
     <div class="w-unit">kilogramm (masalan: 1.5, 10.3, 25.7)</div>
@@ -567,7 +564,7 @@ function openModal(p){
 function closeModal(){document.getElementById('wModal').classList.remove('open')}
 function adjW(d){
   const inp=document.getElementById('wInp');
-  inp.value=Math.max(0.1,Math.round(((parseFloat(inp.value)||1)+d)*10)/10);
+  inp.value=Math.max(10,Math.round(((parseFloat(inp.value)||1)+d)*10)/10);
   updPrev();
 }
 function setW(v){document.getElementById('wInp').value=v;updPrev()}
@@ -579,7 +576,7 @@ function updPrev(){
 function addToCart(){
   const raw=parseFloat(document.getElementById('wInp').value);
   const w=Math.round(raw*10)/10;
-  if(!w||w<=0){tg.showAlert('Vaznni kiriting!');return}
+  if(!w||w<10){tg.showAlert('Minimal vazn 10 kg!');return}
   const ei=cart.findIndex(c=>c.id===curMat.id);
   if(ei>=0){cart[ei].weight=w;cart[ei].total=Math.round(w*curMat.price)}
   else cart.push({...curMat,weight:w,total:Math.round(w*curMat.price)});
@@ -651,7 +648,7 @@ function getLocation(){
 
 // ===== SUBMIT =====
 function submitOrder(){
-  if(!userLoc){tg.showAlert('Joylashuvni aniqlang!');return}
+  if(!userLoc){tg.showAlert('📍 Avval joylashuvni aniqlang!');return}
   if(!cart.length){tg.showAlert('Savatcha bo\'sh!');return}
   const btn=document.getElementById('submitBtn');btn.classList.add('loading');
   const total=cart.reduce((s,i)=>s+i.total,0);
