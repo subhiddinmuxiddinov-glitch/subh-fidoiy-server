@@ -698,9 +698,18 @@ function launchConfetti(){
 }
 
 function toggleHistory(){
-  const list=document.getElementById('prevList');
-  const arrow=document.getElementById('histArrow');
-  if(list.style.display==='none'){list.style.display='block';arrow.textContent='▲';}
+  var list=document.getElementById('prevList');
+  var arrow=document.getElementById('histArrow');
+  if(!list)return;
+  if(list.style.display==='none'||list.style.display===''){
+    list.style.display='block';
+    if(arrow)arrow.textContent='▲';
+    renderPrev();
+  }else{
+    list.style.display='none';
+    if(arrow)arrow.textContent='▼';
+  }
+}
   else{list.style.display='none';arrow.textContent='▼';}
 }
 initApp();
