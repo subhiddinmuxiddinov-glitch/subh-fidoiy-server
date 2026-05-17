@@ -384,10 +384,10 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#1a4a25 0
       <button class="w-quick" onclick="setW(20)">20 kg</button>
       <button class="w-quick" onclick="setW(50)">50 kg</button>
     </div>
-    <div class="w-row">
-      <button class="w-adj" onclick="adjW(-0.1)">−</button>
-      <input class="w-inp" type="number" id="wInp" value="10" step="1" min="10" oninput="updPrev()">
-      <button class="w-adj" onclick="adjW(0.1)">+</button>
+    <div class="w-row" style="display:block;margin-bottom:8px">
+      
+      <input class="w-inp" type="number" id="wInp" value="10" min="10" step="1" oninput="updPrev()" style="width:100%;text-align:center;font-size:26px;font-weight:900;padding:14px;border:2.5px solid #4caf50;border-radius:14px;font-family:Nunito,sans-serif;box-sizing:border-box">
+      
     </div>
     <div class="w-unit">kilogramm (masalan: 1.5, 10.3, 25.7)</div>
     <div class="price-prev">
@@ -552,7 +552,7 @@ function openModal(p){
   document.getElementById('mIcon').textContent=p.icon;
   document.getElementById('mName').textContent=p.name;
   document.getElementById('mPrice').textContent=p.price.toLocaleString()+' so\'m/kg';
-  document.getElementById('wInp').value=ex?ex.weight:1;
+  document.getElementById('wInp').value=ex?ex.weight:10;
   updPrev();
   document.getElementById('wModal').classList.add('open');
   if(tg.HapticFeedback)tg.HapticFeedback.impactOccurred('light');
