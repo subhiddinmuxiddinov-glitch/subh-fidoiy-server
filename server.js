@@ -13,7 +13,7 @@ app.use(express.json());
 app.use('/miniapp', express.static(path.join(__dirname, 'public/miniapp')));
 app.use('/admin', (req, res, next) => {
   const auth = req.headers.authorization;
-  if (!auth || auth !== 'Basic ' + Buffer.from('admin:' + process.env.ADMIN_PASSWORD).toString('base64')) {
+  if (!auth || auth !== 'Basic ' + Buffer.from('bismillah:' + process.env.ADMIN_PASSWORD).toString('base64')) {
     res.setHeader('WWW-Authenticate', 'Basic realm="Admin Panel"');
     return res.status(401).send('Parol kerak!');
   }
