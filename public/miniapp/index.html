@@ -524,25 +524,49 @@ function renderPrev(){
 // ===== MATERIALS =====
 function renderMats(){
   const list=document.getElementById('matList');
-  list.innerHTML='';
-  const prods = getProds();
-  prods.filter(p=>p.active!==false).forEach((p,i)=>{
-    const ic=cart.find(c=>c.id===p.id);
-    const btn=document.createElement('button');
-    btn.className='mat-btn'+(ic?' has-item':'');
-    btn.style.animationDelay=(i*0.08)+'s';
-    btn.innerHTML=`
-      <div class="mat-icon ${p.color}">${p.icon}</div>
-      <div class="mat-info">
-        <div class="mat-name">${p.name}</div>
-        <div class="mat-price">${p.price.toLocaleString()} so'm/kg</div>
-        ${ic?`<span class="mat-added">✓ ${ic.weight} kg qo'shildi</span>`:''}
-      </div>
-      <div class="mat-arrow"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
-      <div class="mat-shimmer"></div>`;
-    btn.onclick=()=>openModal(p);
-    list.appendChild(btn);
-  });
+  list.innerHTML='<div style="text-align:center;padding:20px;color:#aaa">⏳ Yuklanmoqda...</div>';
+  fetch(SERVER_URL+'/api/products')
+    .then(r=>r.json())
+    .then(prods=>{
+      list.innerHTML='';
+      prods.filter(p=>p.active!==false).forEach((p,i)=>{
+        const ic=cart.find(c=>c.id===p.id);
+        const btn=document.createElement('button');
+        btn.className='mat-btn'+(ic?' has-item':'');
+        btn.style.animationDelay=(i*0.08)+'s';
+        btn.innerHTML=`
+          <div class="mat-icon ${p.color}">${p.icon}</div>
+          <div class="mat-info">
+            <div class="mat-name">${p.name}</div>
+            <div class="mat-price">${p.price.toLocaleString()} so'm/kg</div>
+            ${ic?`<span class="mat-added">✓ ${ic.weight} kg qo'shildi</span>`:''}
+          </div>
+          <div class="mat-arrow"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+          <div class="mat-shimmer"></div>`;
+        btn.onclick=()=>openModal(p);
+        list.appendChild(btn);
+      });
+    })
+    .catch(()=>{
+      list.innerHTML='';
+      DEF_PRODUCTS.filter(p=>p.active!==false).forEach((p,i)=>{
+        const ic=cart.find(c=>c.id===p.id);
+        const btn=document.createElement('button');
+        btn.className='mat-btn'+(ic?' has-item':'');
+        btn.style.animationDelay=(i*0.08)+'s';
+        btn.innerHTML=`
+          <div class="mat-icon ${p.color}">${p.icon}</div>
+          <div class="mat-info">
+            <div class="mat-name">${p.name}</div>
+            <div class="mat-price">${p.price.toLocaleString()} so'm/kg</div>
+            ${ic?`<span class="mat-added">✓ ${ic.weight} kg qo'shildi</span>`:''}
+          </div>
+          <div class="mat-arrow"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+          <div class="mat-shimmer"></div>`;
+        btn.onclick=()=>openModal(p);
+        list.appendChild(btn);
+      });
+    });
 }
 
 // ===== MODAL =====
