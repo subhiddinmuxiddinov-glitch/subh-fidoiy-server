@@ -5,9 +5,17 @@ const mongoose = require('mongoose');
 const TelegramBot = require('node-telegram-bot-api');
 const path = require('path');
 
+const rateLimit = require('express-rate-limit');
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 60,
+  message: { error: 'Juda ko\'p so\'rov! Biroz kuting.' }
+});
+app.use(limiter);
 
 // Static files
 app.use('/miniapp', express.static(path.join(__dirname, 'public/miniapp')));
