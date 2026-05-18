@@ -211,7 +211,7 @@ function sendDailyReminder(){
       if(!user.userId||user.userId.startsWith('U'))return;
       bot.sendMessage(user.userId,
         '🌿 Subh Fidoiy\n\n♻️ Bugun chiqindingiz bormi?\n💰 Sotib yuboring!',
-        {reply_markup:{inline_keyboard:[[{text:'📦 Hozir sotish →',url:'https://subh-fidoiy-server-production-9ec8.up.railway.app/miniapp'}]]}}
+        {reply_markup:{inline_keyboard:[[{text:'📦 Hozir sotish →',url:'https://bit.ly/subh-fidoiy'}]]}}
       ).catch(function(){});
     });
   }).catch(function(){});
@@ -225,6 +225,6 @@ miniBot.on('polling_error', function(e){console.log('miniBot xato:', e.code)});
 miniBot.onText(/\/start/, function(msg){
   miniBot.sendMessage(msg.chat.id,
     '🌿 Subh Fidoiy ga xush kelibsiz!\n\n♻️ Chiqindingizni pulga aylantiring\n\n👇 Bosing va boshlang:',
-    {reply_markup:{inline_keyboard:[[{text:'📦 Sotish →',url:'https://subh-fidoiy-server-production-9ec8.up.railway.app/miniapp'}]]}}
+    {reply_markup:{inline_keyboard:[[{text:'📦 Sotish →',url:'https://bit.ly/subh-fidoiy'}]]}}
   );
 });
