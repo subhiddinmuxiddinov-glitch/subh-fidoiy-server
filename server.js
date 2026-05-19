@@ -224,6 +224,6 @@ miniBot.on('polling_error', function(e){console.log('miniBot xato:', e.code)});
 miniBot.onText(/\/start/, function(msg){
   miniBot.sendMessage(msg.chat.id,
     '🌿 Subh Fidoiy ga xush kelibsiz!\n\n♻️ Chiqindingizni pulga aylantiring\n\n👇 Bosing va boshlang:',
-    {reply_markup:{inline_keyboard:[[{text:'📦 Sotish →',url:'https://bit.ly/subh-fidoiy'}]]}}
+    {reply_markup:{inline_keyboard:[[{text:'📦 Sotish →',url:'https://bit.ly/Subh-Fidoiy'}]]}}
   );
 });
