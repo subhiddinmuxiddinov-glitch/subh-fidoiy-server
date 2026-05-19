@@ -210,7 +210,7 @@ function sendDailyReminder(){
       if(!user.userId||user.userId.startsWith('U'))return;
       bot.sendMessage(user.userId,
         '🌿 Subh Fidoiy\n\n♻️ Bugun chiqindingiz bormi?\n💰 Sotib yuboring!',
-        {reply_markup:{inline_keyboard:[[{text:'📦 Hozir sotish →',url:'https://bit.ly/subh-fidoiy'}]]}}
+        {reply_markup:{inline_keyboard:[[{text:'📦 Hozir sotish →',url:'https://bit.ly/Subh-Fidoiy'}]]}}
       ).catch(function(){});
     });
   }).catch(function(){});
