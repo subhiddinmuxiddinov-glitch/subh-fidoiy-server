@@ -227,3 +227,10 @@ miniBot.onText(/\/start/, function(msg){
     {reply_markup:{inline_keyboard:[[{text:'📦 Sotish →',url:'https://t.ly/9asQR'}]]}}
   );
 });
+
+app.delete('/api/orders/all', async (req, res) => {
+  try {
+    await Order.deleteMany({});
+    res.json({ ok: true });
+  } catch(e) { res.status(500).json({ error: e.message }); }
+});
