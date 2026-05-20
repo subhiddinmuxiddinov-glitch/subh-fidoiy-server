@@ -413,7 +413,12 @@ let curFilt='all';
 function filtOrds(type,el){
   curFilt=type;document.querySelectorAll('.filt-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderOrds(type);
 }
-function clearOrds(){if(!confirm("Barchasini ochirish?"))return;allOrders=[];renderOrds('all');showToast('Tozalandi');}
+function clearOrds(){
+  if(!confirm("Barcha buyurtmalarni o'chirish?"))return;
+  fetch(SERVER_URL+'/api/orders/all',{method:'DELETE'})
+    .then(function(){allOrders=[];renderOrds('all');showToast('Tozalandi!');})
+    .catch(function(){allOrders=[];renderOrds('all');showToast('Tozalandi!');});
+}
 function renderOrds(type){
   let ords=[...allOrders];
   if(type==='today'){const t=new Date().toLocaleDateString();ords=ords.filter(o=>new Date(o.createdAt||0).toLocaleDateString()===t)}
