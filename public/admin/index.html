@@ -416,8 +416,12 @@ function filtOrds(type,el){
 function clearOrds(){
   if(!confirm("Barcha buyurtmalarni o'chirish?"))return;
   fetch(SERVER_URL+'/api/orders/all',{method:'DELETE'})
-    .then(function(){allOrders=[];renderOrds('all');showToast('Tozalandi!');})
-    .catch(function(){allOrders=[];renderOrds('all');showToast('Tozalandi!');});
+    .then(function(r){return r.json()})
+    .then(function(r){
+      if(r.ok){allOrders=[];renderOrds('all');renderDash();showToast('Serverdan tozalandi!');}
+      else{showToast('Xato!');}
+    })
+    .catch(function(){showToast('Server bilan bog\'lanib bo\'lmadi!');});
 }
 function renderOrds(type){
   let ords=[...allOrders];
