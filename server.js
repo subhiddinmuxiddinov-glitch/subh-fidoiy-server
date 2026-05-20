@@ -210,7 +210,7 @@ function sendDailyReminder(){
       if(!user.userId||user.userId.startsWith('U'))return;
       bot.sendMessage(user.userId,
         '🌿 Subh Fidoiy\n\n♻️ Bugun chiqindingiz bormi?\n💰 Sotib yuboring!',
-        {reply_markup:{inline_keyboard:[[{text:'📦 Hozir sotish →',url:'https://t.ly/9asQR'}]]}}
+        {reply_markup:{inline_keyboard:[[{text:'📦 Hozir sotish →',url:'https://t.ly/FVZRO'}]]}}
       ).catch(function(){});
     });
   }).catch(function(){});
@@ -224,7 +224,7 @@ miniBot.on('polling_error', function(e){console.log('miniBot xato:', e.code)});
 miniBot.onText(/\/start/, function(msg){
   miniBot.sendMessage(msg.chat.id,
     '🌿 Subh Fidoiy ga xush kelibsiz!\n\n♻️ Chiqindingizni pulga aylantiring\n\n👇 Bosing va boshlang:',
-    {reply_markup:{inline_keyboard:[[{text:'📦 Sotish →',url:'https://t.ly/9asQR'}]]}}
+    {reply_markup:{inline_keyboard:[[{text:'📦 Sotish →',url:'https://t.ly/FVZRO'}]]}}
   );
 });
 
