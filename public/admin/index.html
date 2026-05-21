@@ -298,9 +298,9 @@ function loadStats(){
   apiFetch('/api/stats').then(s=>{
     if(s){
       document.getElementById('st-orders').textContent=s.orders||0;
-      document.getElementById('st-rev').textContent=(s.revenue||0).toLocaleString();
+      document.getElementById('st-rev').textContent=fmtNum(s.revenue||0);
       document.getElementById('st-users').textContent=s.users||0;
-      document.getElementById('st-weight').textContent=(s.weight||0).toFixed(1);
+      document.getElementById('st-weight').textContent=fmtKg(s.weight||0);
     }
   });
 }
@@ -341,7 +341,7 @@ function renderDash(){
   if(!r.length){wrap.innerHTML='<div class="no-data"><div class="no-data-ico">📭</div><p>Hali buyurtma yoq</p></div>';return}
   wrap.innerHTML=r.map(o=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f0f0">
     <div><div style="font-weight:800;color:var(--gd);font-size:13px">${o.name||'—'}</div><div style="font-size:11px;color:var(--muted)">${o.phone||'—'} · ${(o.items||[]).length} mahsulot</div></div>
-    <div style="text-align:right"><div style="font-weight:900;color:var(--gl);font-size:13px">${(o.total||0).toLocaleString()}</div><div style="font-size:10px;color:var(--muted)">${(o.date||'').slice(0,10)}</div></div>
+    <div style="text-align:right"><div style="font-weight:900;color:var(--gl);font-size:13px">${fmtNum(o.total||0)}</div><div style="font-size:10px;color:var(--muted)">${(o.date||'').slice(0,10)}</div></div>
   </div>`).join('');
 }
 function renderProds(){
@@ -432,7 +432,7 @@ function renderOrds(type){
   wrap.innerHTML=ords.map(o=>`<div class="ord-item">
     <div class="ord-hdr">
       <div><div class="ord-id">${o.orderId||'—'}</div><div class="ord-name">${o.name||'—'}</div><div class="ord-phone">📞 ${o.phone||'—'}</div></div>
-      <div><div class="ord-total">${(o.total||0).toLocaleString()}</div><div class="ord-weight">${(o.totalWeight||0).toFixed(1)}kg</div></div>
+      <div><div class="ord-total">${fmtNum(o.total||0)}</div><div class="ord-weight">${fmtKg(o.totalWeight||0)}kg</div></div>
     </div>
     <div class="ord-tags">${(o.items||[]).map(i=>`<span class="ord-tag">${i.icon||''} ${i.name}: ${i.weight}kg</span>`).join('')}</div>
     ${o.location?`<button class="map-btn" onclick="window.open('https://maps.google.com/?q=${o.location.lat},${o.location.lng}','_blank')">🗺 Xarita</button>`:''}
@@ -447,8 +447,8 @@ function renderUsers(){
   if(!us.length){wrap.innerHTML='<div class="no-data"><div class="no-data-ico">👥</div><p>'+(q?'Topilmadi':'Foydalanuvchi yoq')+'</p></div>';return}
   wrap.innerHTML=us.map(u=>`<div class="user-item">
     <div class="user-ava">${(u.name||'?')[0].toUpperCase()}</div>
-    <div class="user-info"><div class="user-name">${u.name||'—'}</div><div class="user-phone">📞 ${u.phone||'—'}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${u.orderCount||0} ta · ${(u.totalWeight||0).toFixed(1)}kg</div></div>
-    <div class="user-stats"><div class="user-rev">${(u.totalRevenue||0).toLocaleString()}</div><div class="user-sub">som</div></div>
+    <div class="user-info"><div class="user-name">${u.name||'—'}</div><div class="user-phone">📞 ${u.phone||'—'}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${u.orderCount||0} ta · ${fmtKg(u.totalWeight||0)}kg</div></div>
+    <div class="user-stats"><div class="user-rev">${fmtNum(u.totalRevenue||0)}</div><div class="user-sub">som</div></div>
   </div>`).join('');
 }
 let curTopType='weight';
@@ -462,7 +462,7 @@ function renderTop(type,el){
   wrap.innerHTML=us.map((u,i)=>`<div class="top-item">
     <div class="top-rank ${i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-o'}">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</div>
     <div class="top-info"><div class="top-name">${u.name||'—'}</div><div class="top-phone">📞 ${u.phone||'—'} · ${u.orderCount||0} zakaz</div></div>
-    <div><div class="top-val">${type==='weight'?(u.totalWeight||0).toFixed(1)+' kg':(u.totalRevenue||0).toLocaleString()+' som'}</div><div class="top-sub2">${type==='weight'?(u.totalRevenue||0).toLocaleString()+' som':(u.totalWeight||0).toFixed(1)+' kg'}</div></div>
+    <div><div class="top-val">${type==='weight'?fmtKg(u.totalWeight||0)+' kg':fmtNum(u.totalRevenue||0)+' som'}</div><div class="top-sub2">${type==='weight'?fmtNum(u.totalRevenue||0)+' som':fmtKg(u.totalWeight||0)+' kg'}</div></div>
   </div>`).join('');
 }
 function saveTg(){localStorage.setItem('sf_bot_token',document.getElementById('botToken').value.trim());localStorage.setItem('sf_chat_id',document.getElementById('chatId').value.trim());showToast('Telegram sozlamalari saqlandi');}
@@ -470,6 +470,20 @@ function loadTg(){document.getElementById('botToken').value=localStorage.getItem
 function exportData(){
   const data={products:allProducts,orders:allOrders,users:allUsers,exported:new Date().toISOString()};
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download='subh-fidoiy-'+Date.now()+'.json';a.click();
+}
+function fmtNum(n){
+  if(!n||isNaN(n))return '0';
+  if(n>=1e12)return (n/1e12).toFixed(1)+'T';
+  if(n>=1e9)return (n/1e9).toFixed(1)+'B';
+  if(n>=1e6)return (n/1e6).toFixed(1)+'M';
+  return Number(n).toLocaleString();
+}
+function fmtKg(n){
+  if(!n||isNaN(n))return '0.0';
+  if(n>=1e12)return (n/1e12).toFixed(1)+'T';
+  if(n>=1e9)return (n/1e9).toFixed(1)+'B';
+  if(n>=1e6)return (n/1e6).toFixed(1)+'M';
+  return Number(n).toFixed(1);
 }
 function showToast(msg){
   const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);
